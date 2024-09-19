@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
                     DO UPDATE SET answers = EXCLUDED.answers
                 `;
             });
-            
+            console.log("Submission:", insertQueries);
             // Commit transaction
             await client.query('COMMIT');
 
