@@ -19,7 +19,6 @@ const Navbar = () => {
     router.push('/');
   };
 
-  console.log(isAdmin);
   return (
     <nav className="bg-blue-500 p-4 flex justify-between items-center">
       <ul className="flex space-x-4">

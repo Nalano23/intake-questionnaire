@@ -9,6 +9,7 @@ export interface QuestionAnswers {
     priority: number; 
     answers: string | null;
 }
+
 // GET Questions of specified questionaire and previous answers if they were already answered.
 export async function GET(request: NextRequest) {
     try {

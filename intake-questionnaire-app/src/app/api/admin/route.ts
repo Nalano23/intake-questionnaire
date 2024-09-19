@@ -1,16 +1,17 @@
-import { NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres'; // Adjust import if needed
+
+import { NextRequest, NextResponse } from 'next/server';
+import { sql } from '@vercel/postgres'; 
 import { UserData } from '@/models/user-data';
 
 // GET Username and User's count of questionnaires completed
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
+        const role = req.nextUrl.searchParams.get('role');
         const { rows } = await sql<UserData>`
-            SELECT u.id, u.username, 
-                COALESCE(COUNT(DISTINCT r.questionnaire_id), 0) AS questionnaires_completed
+            SELECT u.id, u.username, (COUNT(DISTINCT r.questionnaire_id)) AS questionnaires_completed
             FROM users u
             LEFT JOIN responses r ON u.id = r.user_id AND r.questionnaire_id IS NOT NULL
-            WHERE u.role = 'user'
+            WHERE u.role = ${role}
             GROUP BY u.id, u.username
             ORDER BY u.id;
         `;

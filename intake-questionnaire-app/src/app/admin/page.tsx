@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import UserModal from '../components/UserModal';
 import { UserAnswers } from '@/models/user-answers';
 
+
 const Admin = () => {
   const router = useRouter();
   const [users, setUsers] = useState<UserData[]>([]);
@@ -13,7 +14,7 @@ const Admin = () => {
   const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<UserAnswers | null>(null);
-
+  
   useEffect(() => {
     const user = localStorage.getItem('admin');
     const parsedUser = user ? JSON.parse(user) : null;
@@ -24,21 +25,21 @@ const Admin = () => {
       router.push('/login');
     }
 
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(`/api/admin`);
-        if (response.status !== 200) {
-          throw new Error('Network response not ok');
-        }
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        setError('Failed to fetch users');
-      }
-    };
-    fetchUsers();
-  }, []);
+    handleRefresh();
+  }, [router]);
 
+  const handleRefresh = async () => {
+    try {
+      const response = await fetch(`/api/admin?role=user`, { cache: 'no-store' });
+      if (response.status !== 200) {
+        throw new Error('Network response not ok');
+      }
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      setError('Failed to fetch users');
+    }
+  }
   // Handle modal for specified user
   const handleUserClick = async (user: UserData) => {
     setSelectedUser(user);
@@ -67,9 +68,15 @@ const Admin = () => {
       {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
-          <h1 className="text-3xl font-bold mb-6 text-center">
-            Admin Dashboard
-          </h1>
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+            <button 
+              onClick={handleRefresh} 
+              className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            >
+              Refresh
+            </button>
+          </div>
           {users.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
@@ -94,8 +101,8 @@ const Admin = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <button
-                            className="text-blue-500 hover:underline"
-                            onClick={() => handleUserClick(user)}> 
+                          className="text-blue-500 hover:underline"
+                          onClick={() => handleUserClick(user)}> 
                           {user.username}
                         </button>
                       </td>
@@ -112,12 +119,13 @@ const Admin = () => {
           )}
         </div>
       </div>
-
+  
       {isModalOpen && selectedUser && modalData && (
         <UserModal user={selectedUser} questionnaires={modalData.questionnaires} onClose={handleCloseModal} />
       )}
     </>
   );
+  
 };
 
 export default Admin;
