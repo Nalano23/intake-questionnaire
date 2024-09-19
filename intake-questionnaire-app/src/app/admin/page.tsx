@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import UserModal from '../components/UserModal';
 import { UserAnswers } from '@/models/user-answers';
 
-
 const Admin = () => {
   const router = useRouter();
   const [users, setUsers] = useState<UserData[]>([]);
