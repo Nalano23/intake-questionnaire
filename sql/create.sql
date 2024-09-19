@@ -25,3 +25,12 @@ CREATE TABLE questionnaire_questions (
     question_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
     priority INTEGER NOT NULL
 );
+
+-- Create table for user responses
+CREATE TABLE responses (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    questionnaire_id INTEGER REFERENCES questionnaire(id) ON DELETE CASCADE,
+    question_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
+    answers JSONB NOT NULL
+);
