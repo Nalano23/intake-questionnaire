@@ -27,7 +27,6 @@ export async function POST(req: NextRequest) {
                 `;
             });
             
-            console.log(insertQueries);
             // Commit transaction
             await client.query('COMMIT');
 

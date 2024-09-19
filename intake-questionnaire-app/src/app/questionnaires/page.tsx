@@ -22,11 +22,9 @@ const Questionnaires = () => {
     const questionnairesPull = async () => {
       try {
          const response = await fetch(`/api/questionnaires?userId=${parsedUser.id}`);
-
         if (response.status != 200) {
           throw new Error('Bad network response');
         }
-        
         const data : Questionnaire[] = await response.json();
         setQuestionaires(data);
       } catch (error) {

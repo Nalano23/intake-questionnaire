@@ -17,13 +17,13 @@ export async function GET(request: NextRequest) {
             ORDER BY q.name, r.question_id;
         `;
 
-        // Initialize the result object
+        // Initialize result object
         const result = {
             user_id: userId,
             questionnaires: {}
         };
 
-        // Process each row in the userAnswers
+        // Process each row in userAnswers
         userAnswers.forEach(({ name, question_id, question, answers }) => {
             if (!result.questionnaires[name]) {
                 result.questionnaires[name] = {};

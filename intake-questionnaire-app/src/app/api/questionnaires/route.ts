@@ -16,7 +16,6 @@ export async function GET(req: NextRequest) {
             FROM questionnaire q
         `;
         const questionnaires = response.rows;
-        console.log(questionnaires);
         return NextResponse.json(questionnaires);
     } catch (error) {
         return NextResponse.error();

@@ -15,7 +15,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    setIsAdmin(false); // Update the state to reflect the logout
+    setIsAdmin(false);
     router.push('/');
   };
 

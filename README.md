@@ -1,12 +1,11 @@
-# intake-questionnaire
-
-# Function App Setup Guide
+# Intake Questionnaire Setup Guide
 
 ## Overview
-Provide a brief description of what the function app does and its key features.
+Objective: Create a web application that allows users to answer questions and administrators
+to view all the answers provided by users.
 
 ## Step 1: Navigate to site
-1. **Navigate to Your Vercel Site**
+1. **Navigate to Vercel Site**
    - https://intake-questionnaire-app.vercel.app/
 
 ## Step 2: Login
