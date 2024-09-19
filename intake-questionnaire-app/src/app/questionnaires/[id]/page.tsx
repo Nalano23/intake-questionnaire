@@ -134,10 +134,12 @@ const QuestionnaireDetails = ({ params }: Props) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    userId: user.id, // Send user ID from localStorage
+                    userId: user.id,
                     answers: formattedAnswers
                 }),
+                
             });
+            console.log(response);
             router.push('/questionnaires');
         } catch (error) {
             setError('Failed to submit answers');

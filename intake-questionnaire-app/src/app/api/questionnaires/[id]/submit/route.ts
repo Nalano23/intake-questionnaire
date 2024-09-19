@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres'; // Adjust import if needed
+import { QuestionnaireAnswers } from '@/models/questionnaire-questions';
 
 // POST questionnaire answers
 export async function POST(req: NextRequest) {
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest) {
         await client.query('BEGIN');
 
         try {
-            const insertQueries = answers.map((answer: any) => {
+            const insertQueries = answers.map((answer: QuestionnaireAnswers) => {
                 const questionId = answer.questionId;
                 return client.sql`
                     INSERT INTO responses (user_id, questionnaire_id, question_id, answers)
@@ -26,6 +27,7 @@ export async function POST(req: NextRequest) {
                 `;
             });
             
+            console.log(insertQueries);
             // Commit transaction
             await client.query('COMMIT');
 

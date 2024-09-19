@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres'; // Adjust import if needed
 import { UserData } from '@/models/user-data';
 
 // GET Username and User's count of questionnaires completed
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
         const { rows } = await sql<UserData>`
             SELECT u.id, u.username, 
