@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Question } from '@/models/questions';
 import QuestionCardInput from '@/app/components/QuestionCardInput';
 import QuestionCardMCQ from '@/app/components/QuestionCardMCQ';
+import { QuestionWithAnswers } from '@/models/question-with-answers';
 
 interface Props {
     params: { id: string };
@@ -36,9 +37,9 @@ const QuestionnaireDetails = ({ params }: Props) => {
 
                 // Populate the questions and answers (if present)
                 setQuestions(data.questions);
-
+                
                 const answersData: { [key: number]: string[] | string } = {};
-                data.questions.forEach((question: any) => {
+                data.questions.forEach((question: QuestionWithAnswers) => {
                     if (question.answers) {
                         answersData[question.id] = question.answers;
                     }
